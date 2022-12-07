@@ -1,7 +1,0 @@
-MODEL:
-  TYPE: snnmlp
-  NAME: snnmlp_base_patch4_lif4_224
-  DROP_PATH_RATE: 0.5
-  SNNMLP:
-    EMBED_DIM: 128
-    DEPTHS: [ 2, 2, 18, 2 ]
