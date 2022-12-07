@@ -10,6 +10,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
+import numpy as np
 
 
 __all__ = ['ghost_net']
@@ -222,7 +223,11 @@ def ghostnet(**kwargs):
     Constructs a GhostNet model
     """
     cfgs = [
-        # k, t, c, SE, s 
+        # k 核
+        # t 通道数
+        # c 瓶颈输出
+        # SE 是否使用注意力机制
+        # s  步长
         # stage1
         [[3,  16,  16, 0, 1]],
         # stage2
@@ -254,6 +259,9 @@ if __name__=='__main__':
     model = ghostnet()
     model.eval()
     print(model)
+    tmp = filter(lambda x: x.requires_grad, model.parameters())
+    num = sum(map(lambda x: np.prod(x.shape), tmp))
+    print('Total trainable tensors:', num)
     input = torch.randn(32,3,320,256)
     y = model(input)
     print(y.size())
